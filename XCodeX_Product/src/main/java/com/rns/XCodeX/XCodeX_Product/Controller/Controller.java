@@ -114,4 +114,10 @@ public class Controller {
 		return ResponseEntity.ok(login);
 	}
 
+	@RequestMapping("/getAllUsers")
+	public List<UserMaster> getAllUsers() {
+		List<UserMaster> alluser = userService.getAllUsers();
+		System.out.println("List of Users => " + alluser);
+		return alluser;
+	}
 }

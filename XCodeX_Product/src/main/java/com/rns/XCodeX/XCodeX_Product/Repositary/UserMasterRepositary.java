@@ -10,4 +10,6 @@ import com.rns.XCodeX.XCodeX_Product.model.UserMaster;
 @Repository
 public interface UserMasterRepositary extends CrudRepository<UserMaster, Long> {
 	List<UserMaster> findAllByEmail(String email);
+	List<UserMaster> findAll();
+
 }
