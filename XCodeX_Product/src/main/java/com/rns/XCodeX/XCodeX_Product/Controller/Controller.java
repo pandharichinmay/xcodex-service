@@ -120,4 +120,9 @@ public class Controller {
 		System.out.println("List of Users => " + alluser);
 		return alluser;
 	}
+
+	@RequestMapping("/getOrderDetails/{idOrder}")
+	public List<OrderMaster> getOrderDetails(@PathVariable Long idOrder) {
+		return orderService.getOrderDetails(idOrder);
+	}
 }

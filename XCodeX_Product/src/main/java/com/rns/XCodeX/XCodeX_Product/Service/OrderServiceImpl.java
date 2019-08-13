@@ -98,4 +98,10 @@ public class OrderServiceImpl implements OrderService {
 
 	}
 
+	@Override
+	public List<OrderMaster> getOrderDetails(Long idOrder) {
+		System.out.println("Order Details By Order Id!.." + idOrder);
+		return orderMasterRepositary.findByidOrder(idOrder);
+	}
+
 }

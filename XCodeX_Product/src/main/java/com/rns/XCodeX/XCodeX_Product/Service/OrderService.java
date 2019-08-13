@@ -2,7 +2,6 @@ package com.rns.XCodeX.XCodeX_Product.Service;
 
 import java.util.List;
 
-
 import com.rns.XCodeX.XCodeX_Product.model.CategoryMaster;
 import com.rns.XCodeX.XCodeX_Product.model.CustomerMaster;
 import com.rns.XCodeX.XCodeX_Product.model.DepartmentMaster;
@@ -33,5 +32,7 @@ public interface OrderService {
 	List<OrderMaster> getOrdersbyAssignTo(Long assignId);
 
 	List<OrderHistoryLog> getOrderHistory(Long orderId);
+
+	List<OrderMaster> getOrderDetails(Long idOrder);
 
 }
