@@ -9,5 +9,5 @@ import com.rns.XCodeX.XCodeX_Product.model.OrderTypeMaster;
 
 @Repository
 public interface OrderTypeMasterRepositary extends CrudRepository<OrderTypeMaster, Long> {
-	List<OrderTypeMaster> findAll();
+	List<OrderTypeMaster> findAllByOrderByTypeAsc();
 }

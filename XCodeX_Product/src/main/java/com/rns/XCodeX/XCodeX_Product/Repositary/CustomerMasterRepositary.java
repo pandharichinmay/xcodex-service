@@ -9,6 +9,6 @@ import com.rns.XCodeX.XCodeX_Product.model.CustomerMaster;
 
 @Repository
 public interface CustomerMasterRepositary extends CrudRepository<CustomerMaster, Long> {
-	List<CustomerMaster> findAll();
+	List<CustomerMaster> findAllByOrderByCustNameAsc();
 
 }

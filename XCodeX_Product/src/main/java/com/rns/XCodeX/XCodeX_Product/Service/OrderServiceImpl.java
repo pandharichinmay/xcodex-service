@@ -1,6 +1,7 @@
 package com.rns.XCodeX.XCodeX_Product.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
 
 	public List<ProductMaster> getAllProducts() {
 		System.out.println("All Products!..");
-		return productMasterRepositary.findAll();
+		return productMasterRepositary.findAllByOrderByProductApplicationAsc();
 	}
 
 	public List<PriorityMaster> getAllPriority() {
@@ -62,23 +63,23 @@ public class OrderServiceImpl implements OrderService {
 
 	public List<OrderTypeMaster> getOrderType() {
 		System.out.println("Order Types!..");
-		return orderTypeMasterRepositary.findAll();
+		return orderTypeMasterRepositary.findAllByOrderByTypeAsc();
 
 	}
 
 	public List<CustomerMaster> getAllCustomer() {
 		System.out.println("All Customers!..");
-		return customerMasterRepositary.findAll();
+		return customerMasterRepositary.findAllByOrderByCustNameAsc();
 	}
 
 	public List<DepartmentMaster> getAllDepartment() {
 		System.out.println("All Departments!..");
-		return departmentMasterRepositary.findAll();
+		return departmentMasterRepositary.findAllByOrderByBusinessUnitAsc();
 	}
 
 	public List<CategoryMaster> getAllOrderCategory() {
 		System.out.println("All Order Categories!..");
-		return categoryMasterRepositary.findAll();
+		return categoryMasterRepositary.findAllByOrderByCategoryAsc();
 	}
 
 	public List<OrderMaster> getAllOrders() {
@@ -99,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderMaster> getOrderDetails(Long idOrder) {
+	public Optional<OrderMaster> getOrderDetails(Long idOrder) {
 		System.out.println("Order Details By Order Id!.." + idOrder);
 		return orderMasterRepositary.findByidOrder(idOrder);
 	}

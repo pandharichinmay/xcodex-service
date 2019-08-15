@@ -19,7 +19,7 @@ public class DepartmentMaster implements Serializable {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long idDept;
 	@Column(name = "business_unit")
-	private String business_unit;
+	private String businessUnit;
 	@Column(name = "active")
 	private String active;
 	@Column(name = "created_by")
@@ -31,12 +31,13 @@ public class DepartmentMaster implements Serializable {
 	@Column(name = "updated_at")
 	private Date deptUpdated_at;
 
-	public String getBusiness_unit() {
-		return business_unit;
+	
+	public String getBusinessUnit() {
+		return businessUnit;
 	}
 
-	public void setBusiness_unit(String business_unit) {
-		this.business_unit = business_unit;
+	public void setBusinessUnit(String businessUnit) {
+		this.businessUnit = businessUnit;
 	}
 
 	public String getActive() {

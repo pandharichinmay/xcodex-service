@@ -1,6 +1,7 @@
 package com.rns.XCodeX.XCodeX_Product.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -122,7 +123,7 @@ public class Controller {
 	}
 
 	@RequestMapping("/getOrderDetails/{idOrder}")
-	public List<OrderMaster> getOrderDetails(@PathVariable Long idOrder) {
+	public Optional<OrderMaster> getOrderDetails(@PathVariable Long idOrder) {
 		return orderService.getOrderDetails(idOrder);
 	}
 }

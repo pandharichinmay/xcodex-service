@@ -9,5 +9,5 @@ import com.rns.XCodeX.XCodeX_Product.model.DepartmentMaster;
 
 @Repository
 public interface DepartmentMasterRepositary extends CrudRepository<DepartmentMaster, Long> {
-	List<DepartmentMaster> findAll();
+	List<DepartmentMaster> findAllByOrderByBusinessUnitAsc();
 }

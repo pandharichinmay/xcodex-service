@@ -63,6 +63,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserMaster> getAllUsers() {
 		System.out.println("All Users !..");
-		return userMasterRepositary.findAll();
+		return userMasterRepositary.findAllByOrderByUsernameAsc();
 	}
 }

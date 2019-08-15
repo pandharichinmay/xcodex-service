@@ -9,5 +9,5 @@ import com.rns.XCodeX.XCodeX_Product.model.ProductMaster;
 
 @Repository
 public interface ProductMasterRepositary extends CrudRepository<ProductMaster, Long> {
-	List<ProductMaster> findAll();
+	List<ProductMaster> findAllByOrderByProductApplicationAsc();
 }

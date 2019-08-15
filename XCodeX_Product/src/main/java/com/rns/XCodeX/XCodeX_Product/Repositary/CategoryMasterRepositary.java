@@ -9,5 +9,5 @@ import com.rns.XCodeX.XCodeX_Product.model.CategoryMaster;
 
 @Repository
 public interface CategoryMasterRepositary extends CrudRepository<CategoryMaster, Long> {
-	List<CategoryMaster> findAll();
+	List<CategoryMaster> findAllByOrderByCategoryAsc();
 }
