@@ -1,11 +1,13 @@
 package com.rns.XCodeX.XCodeX_Product.Controller;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import com.rns.XCodeX.XCodeX_Product.Service.UserService;
 import com.rns.XCodeX.XCodeX_Product.model.CategoryMaster;
 import com.rns.XCodeX.XCodeX_Product.model.CustomerMaster;
 import com.rns.XCodeX.XCodeX_Product.model.DepartmentMaster;
+import com.rns.XCodeX.XCodeX_Product.model.DeviceMaster;
 import com.rns.XCodeX.XCodeX_Product.model.OrderHistoryLog;
 import com.rns.XCodeX.XCodeX_Product.model.OrderMaster;
 import com.rns.XCodeX.XCodeX_Product.model.OrderStatusMaster;
@@ -125,5 +128,16 @@ public class Controller {
 	@RequestMapping("/getOrderDetails/{idOrder}")
 	public Optional<OrderMaster> getOrderDetails(@PathVariable Long idOrder) {
 		return orderService.getOrderDetails(idOrder);
+	}
+
+	@RequestMapping("/getOrderDetailsByUserId/{assignId}")
+	public List<OrderMaster> getOrderDetailsByUserId(@PathVariable Long assignId) {
+		return orderService.getOrderDetailsByUserId(assignId);
+	}
+
+	@PostMapping("/addDevice")
+	public void addDevice(@ModelAttribute  DeviceMaster deviceMaster) {
+		orderService.addDevice(deviceMaster);
+
 	}
 }

@@ -1,5 +1,9 @@
 package com.rns.XCodeX.XCodeX_Product.Service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,21 +13,25 @@ import org.springframework.stereotype.Service;
 import com.rns.XCodeX.XCodeX_Product.Repositary.CategoryMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.CustomerMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.DepartmentMasterRepositary;
+import com.rns.XCodeX.XCodeX_Product.Repositary.DeviceMasterRepository;
 import com.rns.XCodeX.XCodeX_Product.Repositary.OrderHistoryLogRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.OrderMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.OrderStatusMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.OrderTypeMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.PriorityMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.ProductMasterRepositary;
+import com.rns.XCodeX.XCodeX_Product.Repositary.UserMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.model.CategoryMaster;
 import com.rns.XCodeX.XCodeX_Product.model.CustomerMaster;
 import com.rns.XCodeX.XCodeX_Product.model.DepartmentMaster;
+import com.rns.XCodeX.XCodeX_Product.model.DeviceMaster;
 import com.rns.XCodeX.XCodeX_Product.model.OrderHistoryLog;
 import com.rns.XCodeX.XCodeX_Product.model.OrderMaster;
 import com.rns.XCodeX.XCodeX_Product.model.OrderStatusMaster;
 import com.rns.XCodeX.XCodeX_Product.model.OrderTypeMaster;
 import com.rns.XCodeX.XCodeX_Product.model.PriorityMaster;
 import com.rns.XCodeX.XCodeX_Product.model.ProductMaster;
+import com.rns.XCodeX.XCodeX_Product.model.UserMaster;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -45,6 +53,11 @@ public class OrderServiceImpl implements OrderService {
 	private OrderMasterRepositary orderMasterRepositary;
 	@Autowired
 	private OrderHistoryLogRepositary orderHistoryLogRepositary;
+
+	@Autowired
+	private UserMasterRepositary userMasterRepositary;
+	@Autowired
+	private DeviceMasterRepository deviceMasterRepository;
 
 	public List<ProductMaster> getAllProducts() {
 		System.out.println("All Products!..");
@@ -105,4 +118,23 @@ public class OrderServiceImpl implements OrderService {
 		return orderMasterRepositary.findByidOrder(idOrder);
 	}
 
+	@Override
+	public List<OrderMaster> getOrderDetailsByUserId(Long assignId) {
+		System.out.println("Order Details By Order Id!.." + assignId);
+		return orderMasterRepositary.findOrderContaining(assignId);
+	}
+
+	//@Override
+	public void addDevice(DeviceMaster deviceMaster) {
+		System.out.println("Add Device :- " );
+//		Optional<DeviceMaster> existing = deviceMasterRepository.findById();
+//		if (existing.isPresent()) {
+		System.out.println("User Id :- " + deviceMaster.getIdUser());
+		deviceMaster.setIdUser(deviceMaster.getIdUser());
+		deviceMaster.setCreatedDate(new Date());
+		deviceMaster.setDeviceId(deviceMaster.getDeviceId());
+		deviceMasterRepository.save(deviceMaster);
+//		}
+		System.out.println("User Id :- " + deviceMaster.getIdUser());
+	}
 }
