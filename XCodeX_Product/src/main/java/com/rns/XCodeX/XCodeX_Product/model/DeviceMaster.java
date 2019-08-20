@@ -23,7 +23,7 @@ public class DeviceMaster implements Serializable {
 	@Column(name = "iddevice", unique = true, nullable = false)
 	private Long iddevice;
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private UserMaster idUser;
 	@Column(name = "created_date")
 	private Date createdDate;

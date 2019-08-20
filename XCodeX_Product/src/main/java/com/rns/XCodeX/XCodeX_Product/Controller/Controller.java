@@ -136,7 +136,7 @@ public class Controller {
 	}
 
 	@PostMapping("/addDevice")
-	public void addDevice(@ModelAttribute  DeviceMaster deviceMaster) {
+	public void addDevice(@RequestBody  DeviceMaster deviceMaster) {
 		orderService.addDevice(deviceMaster);
 
 	}
