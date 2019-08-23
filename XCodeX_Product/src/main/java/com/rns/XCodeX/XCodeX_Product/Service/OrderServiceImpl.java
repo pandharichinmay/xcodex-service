@@ -111,7 +111,7 @@ public class OrderServiceImpl implements OrderService {
 
 	public List<OrderMaster> getOrdersbyAssignTo(Long assignId) {
 		System.out.println("Orders by Assign To!.." + assignId);
-		return orderMasterRepositary.findTop10ByAssignedTo_idUser_OrderByUpdatedDateDesc(assignId);
+		return orderMasterRepositary.findOrdersAssignedTo(assignId);
 
 	}
 
@@ -130,7 +130,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderMaster> getOrderDetailsByUserId(Long assignId) {
 		System.out.println("Order Details By Order Id!.." + assignId);
-		return orderMasterRepositary.findOrderContaining(assignId);
+		return orderMasterRepositary.findOrdersAssignedTo(assignId);
 	}
 
 	//@Override

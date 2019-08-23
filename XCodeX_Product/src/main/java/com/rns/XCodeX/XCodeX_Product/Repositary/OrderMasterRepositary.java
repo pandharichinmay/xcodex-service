@@ -19,5 +19,5 @@ public interface OrderMasterRepositary extends CrudRepository<OrderMaster, Long>
 	Optional<OrderMaster> findByidOrder(Long idOrder);
 
 	@Query("FROM OrderMaster where status_id!=2 AND active_flag='A' AND (orderCreated_by.idUser =:assignId OR assignedTo.idUser=:assignId)")
-	List<OrderMaster> findOrderContaining(@org.springframework.data.repository.query.Param("assignId") Long assignId);
+	List<OrderMaster> findOrdersAssignedTo(@org.springframework.data.repository.query.Param("assignId") Long assignId);
 }
