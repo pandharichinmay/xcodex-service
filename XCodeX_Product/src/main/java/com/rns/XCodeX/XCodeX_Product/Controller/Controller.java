@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rns.XCodeX.XCodeX_Product.Service.OrderService;
 import com.rns.XCodeX.XCodeX_Product.Service.UserService;
+import com.rns.XCodeX.XCodeX_Product.domain.CodexNotificationRequest;
 import com.rns.XCodeX.XCodeX_Product.model.CategoryMaster;
 import com.rns.XCodeX.XCodeX_Product.model.CustomerMaster;
 import com.rns.XCodeX.XCodeX_Product.model.DepartmentMaster;
@@ -138,6 +139,10 @@ public class Controller {
 	@PostMapping("/addDevice")
 	public void addDevice(@RequestBody  DeviceMaster deviceMaster) {
 		orderService.addDevice(deviceMaster);
-
+	}
+	
+	@PostMapping("/notifyUsers")
+	public void notifyUsers(@RequestBody CodexNotificationRequest request) {
+		orderService.notifyUsers(request);
 	}
 }

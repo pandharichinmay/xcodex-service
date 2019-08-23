@@ -1,15 +1,20 @@
 package com.rns.XCodeX.XCodeX_Product.Service;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.rns.XCodeX.XCodeX_Product.Repositary.CategoryMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.CustomerMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.DepartmentMasterRepositary;
@@ -21,6 +26,9 @@ import com.rns.XCodeX.XCodeX_Product.Repositary.OrderTypeMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.PriorityMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.ProductMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.UserMasterRepositary;
+import com.rns.XCodeX.XCodeX_Product.domain.CodexNotification;
+import com.rns.XCodeX.XCodeX_Product.domain.CodexNotificationObject;
+import com.rns.XCodeX.XCodeX_Product.domain.CodexNotificationRequest;
 import com.rns.XCodeX.XCodeX_Product.model.CategoryMaster;
 import com.rns.XCodeX.XCodeX_Product.model.CustomerMaster;
 import com.rns.XCodeX.XCodeX_Product.model.DepartmentMaster;
@@ -32,6 +40,7 @@ import com.rns.XCodeX.XCodeX_Product.model.OrderTypeMaster;
 import com.rns.XCodeX.XCodeX_Product.model.PriorityMaster;
 import com.rns.XCodeX.XCodeX_Product.model.ProductMaster;
 import com.rns.XCodeX.XCodeX_Product.model.UserMaster;
+import com.rns.XCodeX.XCodeX_Product.util.CodexFCMUtil;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -127,14 +136,47 @@ public class OrderServiceImpl implements OrderService {
 	//@Override
 	public void addDevice(DeviceMaster deviceMaster) {
 		System.out.println("Add Device :- " );
-//		Optional<DeviceMaster> existing = deviceMasterRepository.findById();
-//		if (existing.isPresent()) {
-		System.out.println("User Id :- " + deviceMaster.getIdUser());
-		deviceMaster.setIdUser(deviceMaster.getIdUser());
-		deviceMaster.setCreatedDate(new Date());
-		deviceMaster.setDeviceId(deviceMaster.getDeviceId());
-		deviceMasterRepository.save(deviceMaster);
-//		}
-		System.out.println("User Id :- " + deviceMaster.getIdUser());
+		Optional<DeviceMaster> existing = deviceMasterRepository.findByDeviceId(deviceMaster.getDeviceId());
+		if(!existing.isPresent()) {
+			//Add device ID only if same device ID is not already present
+			System.out.println("User Id :- " + deviceMaster.getIdUser());
+			deviceMaster.setIdUser(deviceMaster.getIdUser());
+			deviceMaster.setCreatedDate(new Date());
+			deviceMaster.setDeviceId(deviceMaster.getDeviceId());
+			deviceMasterRepository.save(deviceMaster);
+		}
+	}
+
+	//@Override
+	public void notifyUsers(CodexNotificationRequest request) {
+		try {
+
+			if (request == null || CollectionUtils.isEmpty(request.getUsers()) || request.getTitle() == null || request.getBody() == null) {
+				return;
+			}
+			// Fetch device IDs
+			List<DeviceMaster> devices = deviceMasterRepository.findByIdUser_idUserIn(request.getUsers());
+			if (!CollectionUtils.isEmpty(devices)) {
+				List<String> deviceIds = new ArrayList<>();
+				for (DeviceMaster device : devices) {
+					deviceIds.add(device.getDeviceId());
+				}
+				CodexNotification notification = new CodexNotification();
+				notification.setRegistration_ids(deviceIds);
+				CodexNotificationObject notify = new CodexNotificationObject();
+				notify.setBody(request.getBody());
+				notify.setTitle(request.getTitle());
+				notify.setAndroid_channel_id("Codex");
+				notification.setNotification(notify);
+
+				CodexFCMUtil.postNotification(notification);
+			}
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

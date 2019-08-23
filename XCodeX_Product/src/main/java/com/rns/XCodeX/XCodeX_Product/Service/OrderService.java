@@ -1,10 +1,10 @@
 package com.rns.XCodeX.XCodeX_Product.Service;
 
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.rns.XCodeX.XCodeX_Product.domain.CodexNotificationRequest;
 import com.rns.XCodeX.XCodeX_Product.model.CategoryMaster;
 import com.rns.XCodeX.XCodeX_Product.model.CustomerMaster;
 import com.rns.XCodeX.XCodeX_Product.model.DepartmentMaster;
@@ -15,7 +15,6 @@ import com.rns.XCodeX.XCodeX_Product.model.OrderStatusMaster;
 import com.rns.XCodeX.XCodeX_Product.model.OrderTypeMaster;
 import com.rns.XCodeX.XCodeX_Product.model.PriorityMaster;
 import com.rns.XCodeX.XCodeX_Product.model.ProductMaster;
-import com.rns.XCodeX.XCodeX_Product.model.UserMaster;
 
 public interface OrderService {
 	List<ProductMaster> getAllProducts();
@@ -42,6 +41,8 @@ public interface OrderService {
 
 	List<OrderMaster> getOrderDetailsByUserId(Long assignId);
 
-	public void addDevice(DeviceMaster deviceMaster);
+	void addDevice(DeviceMaster deviceMaster);
+	
+	void notifyUsers(CodexNotificationRequest request);
 
 }
