@@ -133,12 +133,12 @@ public class OrderServiceImpl implements OrderService {
 		return orderMasterRepositary.findOrdersAssignedTo(assignId);
 	}
 
-	//@Override
+	// @Override
 	public void addDevice(DeviceMaster deviceMaster) {
-		System.out.println("Add Device :- " );
+		System.out.println("Add Device :- ");
 		Optional<DeviceMaster> existing = deviceMasterRepository.findByDeviceId(deviceMaster.getDeviceId());
-		if(!existing.isPresent()) {
-			//Add device ID only if same device ID is not already present
+		if (!existing.isPresent()) {
+			// Add device ID only if same device ID is not already present
 			System.out.println("User Id :- " + deviceMaster.getIdUser());
 			deviceMaster.setIdUser(deviceMaster.getIdUser());
 			deviceMaster.setCreatedDate(new Date());
@@ -147,11 +147,12 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
-	//@Override
+	// @Override
 	public void notifyUsers(CodexNotificationRequest request) {
 		try {
 
-			if (request == null || CollectionUtils.isEmpty(request.getUsers()) || request.getTitle() == null || request.getBody() == null) {
+			if (request == null || CollectionUtils.isEmpty(request.getUsers()) || request.getTitle() == null
+					|| request.getBody() == null) {
 				return;
 			}
 			// Fetch device IDs
@@ -178,5 +179,10 @@ public class OrderServiceImpl implements OrderService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public List<OrderMaster> getAllOrdersSearch() {
+		System.out.println("All Orders List for Search!..");
+		return orderMasterRepositary.findAllOrders();
 	}
 }

@@ -1,13 +1,11 @@
 package com.rns.XCodeX.XCodeX_Product.Controller;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -137,12 +135,19 @@ public class Controller {
 	}
 
 	@PostMapping("/addDevice")
-	public void addDevice(@RequestBody  DeviceMaster deviceMaster) {
+	public void addDevice(@RequestBody DeviceMaster deviceMaster) {
 		orderService.addDevice(deviceMaster);
 	}
-	
+
 	@PostMapping("/notifyUsers")
 	public void notifyUsers(@RequestBody CodexNotificationRequest request) {
 		orderService.notifyUsers(request);
+	}
+
+	@RequestMapping("/getAllOrdersBySearch")
+	public List<OrderMaster> getAllOrdersSearch() {
+		List<OrderMaster> allorder = orderService.getAllOrdersSearch();
+		System.out.println("List of Orders by search => " + allorder);
+		return allorder;
 	}
 }

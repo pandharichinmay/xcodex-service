@@ -44,5 +44,7 @@ public interface OrderService {
 	void addDevice(DeviceMaster deviceMaster);
 	
 	void notifyUsers(CodexNotificationRequest request);
+	
+	List<OrderMaster> getAllOrdersSearch();
 
 }
