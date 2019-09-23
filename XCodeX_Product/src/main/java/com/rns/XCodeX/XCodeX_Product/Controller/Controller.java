@@ -150,4 +150,11 @@ public class Controller {
 		System.out.println("List of Orders by search => " + allorder);
 		return allorder;
 	}
+	
+	@RequestMapping("/loadProfile/{idUser}")
+	public UserMaster loadProfile(@PathVariable Long idUser) {
+		UserMaster request = new UserMaster();
+		request.setIdUser(idUser);
+		return userService.loadProfile(request);
+	}
 }
