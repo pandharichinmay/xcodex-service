@@ -150,4 +150,16 @@ public class Controller {
 		System.out.println("List of Orders by search => " + allorder);
 		return allorder;
 	}
+
+	@RequestMapping("/getLimitedOrders/{limit}")
+	public List<OrderMaster> getLimitedOrders(@PathVariable int limit) {
+		List<OrderMaster> allorders = orderService.getLimitedOrders(limit);
+		System.out.println("List of Orders by search => " + allorders);
+		return allorders;
+	}
+
+	@RequestMapping("/getLimitedOrdersbyAssignTo/{assignId}/{limit}")
+	public List<OrderMaster> getLimitedOrdersbyAssignTo(@PathVariable Long assignId, @PathVariable int limit) {
+		return orderService.getLimitedOrdersbyAssignTo(assignId, limit);
+	}
 }

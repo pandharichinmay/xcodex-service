@@ -10,5 +10,5 @@ import com.rns.XCodeX.XCodeX_Product.model.OrderStatusMaster;
 
 @Repository
 public interface OrderStatusMasterRepositary extends CrudRepository<OrderStatusMaster, Long> {
-	List<OrderStatusMaster> findAll();
+	List<OrderStatusMaster> findAllByOrderBySequenceIdAsc();
 }

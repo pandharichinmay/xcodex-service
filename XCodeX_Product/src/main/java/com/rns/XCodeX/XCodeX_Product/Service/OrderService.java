@@ -1,6 +1,5 @@
 package com.rns.XCodeX.XCodeX_Product.Service;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -42,9 +41,13 @@ public interface OrderService {
 	List<OrderMaster> getOrderDetailsByUserId(Long assignId);
 
 	void addDevice(DeviceMaster deviceMaster);
-	
+
 	void notifyUsers(CodexNotificationRequest request);
-	
+
 	List<OrderMaster> getAllOrdersSearch();
+
+	List<OrderMaster> getLimitedOrders(int limit);
+
+	List<OrderMaster> getLimitedOrdersbyAssignTo(Long assignId, int limit);
 
 }

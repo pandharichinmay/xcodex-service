@@ -1,15 +1,14 @@
 package com.rns.XCodeX.XCodeX_Product.Service;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -25,7 +24,6 @@ import com.rns.XCodeX.XCodeX_Product.Repositary.OrderStatusMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.OrderTypeMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.PriorityMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.Repositary.ProductMasterRepositary;
-import com.rns.XCodeX.XCodeX_Product.Repositary.UserMasterRepositary;
 import com.rns.XCodeX.XCodeX_Product.domain.CodexNotification;
 import com.rns.XCodeX.XCodeX_Product.domain.CodexNotificationObject;
 import com.rns.XCodeX.XCodeX_Product.domain.CodexNotificationRequest;
@@ -39,7 +37,6 @@ import com.rns.XCodeX.XCodeX_Product.model.OrderStatusMaster;
 import com.rns.XCodeX.XCodeX_Product.model.OrderTypeMaster;
 import com.rns.XCodeX.XCodeX_Product.model.PriorityMaster;
 import com.rns.XCodeX.XCodeX_Product.model.ProductMaster;
-import com.rns.XCodeX.XCodeX_Product.model.UserMaster;
 import com.rns.XCodeX.XCodeX_Product.util.CodexFCMUtil;
 
 @Service
@@ -64,8 +61,6 @@ public class OrderServiceImpl implements OrderService {
 	private OrderHistoryLogRepositary orderHistoryLogRepositary;
 
 	@Autowired
-	private UserMasterRepositary userMasterRepositary;
-	@Autowired
 	private DeviceMasterRepository deviceMasterRepository;
 
 	public List<ProductMaster> getAllProducts() {
@@ -79,8 +74,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	public List<OrderStatusMaster> getAllStatus() {
-		System.out.println("Order Status!..");
-		return orderStatusMasterRepositary.findAll();
+		System.out.println("Order Status order by sequence ID!..");
+		return orderStatusMasterRepositary.findAllByOrderBySequenceIdAsc();
 	}
 
 	public List<OrderTypeMaster> getOrderType() {
@@ -185,4 +180,28 @@ public class OrderServiceImpl implements OrderService {
 		System.out.println("All Orders List for Search!..");
 		return orderMasterRepositary.findAllOrders();
 	}
+
+	@Override
+	public List<OrderMaster> getLimitedOrders(int limit) {
+		return orderMasterRepositary.findAllOrders(PageRequest.of(0, limit, Sort.by(Sort.Direction.ASC, "idOrder")));
+
+	}
+
+	/*
+	 * public List<OrderMaster> getLimitedOrdersbyAssignTo(Long assignId, int limit)
+	 * { System.out.println("Limited Orders by Assign To!.." + assignId); return
+	 * orderMasterRepositary.findOrdersAssignedTo(PageRequest.of(0, limit),
+	 * assignId);
+	 * 
+	 * }
+	 * 
+	 * @Override
+	 */
+	
+	public List<OrderMaster> getLimitedOrdersbyAssignTo(Long assignId, int limit) {
+		System.out.println("Limited Orders by Assign To!.." + assignId);
+		return orderMasterRepositary.findOrdersAssignedTo(PageRequest.of(0, limit), assignId);
+
+	}
+
 }

@@ -20,7 +20,7 @@ public class OrderStatusMaster implements Serializable {
 	@Column(name = "status")
 	private String status;
 	@Column(name = "sequence_id")
-	private Long sequence_id;
+	private Long sequenceId;
 	@Column(name = "created_by")
 	private Long orderstatuscreated_by;
 	@Column(name = "created_at")
@@ -46,12 +46,12 @@ public class OrderStatusMaster implements Serializable {
 		this.status = status;
 	}
 
-	public Long getSequence_id() {
-		return sequence_id;
+	public Long getSequenceId() {
+		return sequenceId;
 	}
 
-	public void setSequence_id(Long sequence_id) {
-		this.sequence_id = sequence_id;
+	public void setSequenceId(Long sequenceId) {
+		this.sequenceId = sequenceId;
 	}
 
 	public Long getOrderstatuscreated_by() {
