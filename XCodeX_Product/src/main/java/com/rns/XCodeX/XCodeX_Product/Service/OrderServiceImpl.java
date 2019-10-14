@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.cfg.SecondPass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -106,11 +105,14 @@ public class OrderServiceImpl implements OrderService {
 		System.out.println("All Orders List!..");
 		return orderMasterRepositary.findAll();
 	}
-
+//main
 	public List<OrderMaster> getOrdersbyAssignTo(Long assignId) {
 		System.out.println("Orders by Assign To!.." + assignId);
-		return orderMasterRepositary.findOrdersAssignedTo(assignId);
-
+		List<OrderMaster> assignedOrders = orderMasterRepositary.findOrdersAssignedTo(assignId);
+		for (OrderMaster orderMaster : assignedOrders) {
+			orderMaster.setTimeleft(timeLeftMethod(orderMaster.getDue_date(), new Date()));
+		}
+		return assignedOrders;
 	}
 
 	public List<OrderHistoryLog> getOrderHistory(Long orderId) {
