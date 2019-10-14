@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,15 @@ public class UserServiceImpl implements UserService {
 	public List<UserMaster> getAllUsers() {
 		System.out.println("All Users !..");
 		return userMasterRepositary.findAllByOrderByUsernameAsc();
+	}
+
+	@Override
+	public UserMaster loadProfile(UserMaster userMaster) {
+		Optional<UserMaster> result = userMasterRepositary.findById(userMaster.getIdUser());
+		if (result == null || !result.isPresent()) {
+			return null;
+		} else {
+			return result.get();
+		}
 	}
 }

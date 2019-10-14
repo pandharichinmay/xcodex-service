@@ -29,12 +29,11 @@ public interface OrderMasterRepositary extends CrudRepository<OrderMaster, Long>
 	@Query("FROM OrderMaster where status_id!=2 AND active_flag='A'")
 	List<OrderMaster> findAllOrders(PageRequest of);
 
+	@Query("FROM OrderMaster where status_id!=2 AND active_flag='A' AND (orderCreated_by.idUser =:assignId OR assignedTo.idUser=:assignId)")
+	List<OrderMaster> findOrdersAssignedTo(@org.springframework.data.repository.query.Param("assignId") Long assignId,
+			Pageable pageable);
 	/*
 	 * @Query("FROM OrderMaster where status_id!=2 AND active_flag='A' AND (orderCreated_by.idUser =:assignId OR assignedTo.idUser=:assignId)"
-	 * ) List<OrderMaster>
-	 * findOrdersAssignedTo(@org.springframework.data.repository.query.Param(
-	 * "assignId") Long assignId, Pageable pageable);
+	 * ) List<OrderMaster> findOrdersAssignedTo(PageRequest of, Long assignId);
 	 */
-	@Query("FROM OrderMaster where status_id!=2 AND active_flag='A' AND (orderCreated_by.idUser =:assignId OR assignedTo.idUser=:assignId)")
-	List<OrderMaster> findOrdersAssignedTo(PageRequest of, Long assignId);
 }

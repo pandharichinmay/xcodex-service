@@ -81,9 +81,11 @@ public class OrderMaster implements Serializable {
 	@JoinColumn(name = "customer_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private CustomerMaster customer_id;
 
+	private transient String timeleft;
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "order_id")
 	private List<OrderProductMapping> products;
-	
+
 	public Long getIdOrder() {
 		return idOrder;
 	}
@@ -283,13 +285,21 @@ public class OrderMaster implements Serializable {
 	public void setCustomer_id(CustomerMaster customer_id) {
 		this.customer_id = customer_id;
 	}
-	
+
 	public List<OrderProductMapping> getProducts() {
 		return products;
 	}
-	
+
 	public void setProducts(List<OrderProductMapping> products) {
 		this.products = products;
+	}
+
+	public String getTimeleft() {
+		return timeleft;
+	}
+
+	public void setTimeleft(String timeleft) {
+		this.timeleft = timeleft;
 	}
 
 }

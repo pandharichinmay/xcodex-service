@@ -1,11 +1,14 @@
 package com.rns.XCodeX.XCodeX_Product.Service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.cfg.SecondPass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -125,7 +128,13 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderMaster> getOrderDetailsByUserId(Long assignId) {
 		System.out.println("Order Details By Order Id!.." + assignId);
-		return orderMasterRepositary.findOrdersAssignedTo(assignId);
+		List<OrderMaster> assignedOrders = orderMasterRepositary.findOrdersAssignedTo(assignId);
+
+		for (OrderMaster orderMaster : assignedOrders) {
+			orderMaster.setTimeleft(timeLeftMethod(orderMaster.getDue_date(), new Date()));
+		}
+		return assignedOrders;
+
 	}
 
 	// @Override
@@ -187,21 +196,58 @@ public class OrderServiceImpl implements OrderService {
 
 	}
 
-	/*
-	 * public List<OrderMaster> getLimitedOrdersbyAssignTo(Long assignId, int limit)
-	 * { System.out.println("Limited Orders by Assign To!.." + assignId); return
-	 * orderMasterRepositary.findOrdersAssignedTo(PageRequest.of(0, limit),
-	 * assignId);
-	 * 
-	 * }
-	 * 
-	 * @Override
-	 */
-	
+	@Override
 	public List<OrderMaster> getLimitedOrdersbyAssignTo(Long assignId, int limit) {
 		System.out.println("Limited Orders by Assign To!.." + assignId);
-		return orderMasterRepositary.findOrdersAssignedTo(PageRequest.of(0, limit), assignId);
+		// for(OrderMaster obj:List<OrderMaster>)
+		return orderMasterRepositary.findOrdersAssignedTo(assignId, PageRequest.of(0, limit));
 
 	}
 
+	public static String timeLeftMethod(Date d1, Date d2) {
+		String difference = "";
+		try {
+
+			long diff = d2.getTime() - d1.getTime();
+
+			long diffSeconds = diff / 1000 % 60;
+			long diffMinutes = diff / (60 * 1000) % 60;
+			long diffHours = diff / (60 * 60 * 1000) % 24;
+			long diffDays = diff / (24 * 60 * 60 * 1000);
+			if (diffDays > 0) {
+				difference = difference + diffDays + " days, ";
+
+			}
+			if (diffHours > 0) {
+				difference = difference + diffHours + " hours, ";
+
+			}
+			if (diffMinutes > 0) {
+				difference = difference + diffMinutes + " minutes, ";
+
+			}
+			if (diffSeconds > 0) {
+				difference = difference + diffSeconds + " seconds ";
+
+			}
+			System.out.print(diffDays + " days, ");
+			System.out.print(diffHours + " hours, ");
+			System.out.print(diffMinutes + " minutes, ");
+			System.out.print(diffSeconds + " seconds.");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return difference;
+	}
+
+	public static void main(String[] args) throws ParseException {
+		String dateStart = "10/11/2019 09:29:58";
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		Date d1 = null;
+		d1 = format.parse(dateStart);
+		timeLeftMethod(d1, new Date());
+
+	}
 }

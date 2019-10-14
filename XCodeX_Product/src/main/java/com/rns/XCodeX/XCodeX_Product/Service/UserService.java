@@ -8,5 +8,6 @@ public interface UserService {
 	List<UserMaster> getAllUsersByEmail(String email);
 	List<UserMaster> getAllUsers();
 	UserMaster login(UserMaster userMaster);
+	UserMaster loadProfile(UserMaster userMaster);
 
 }

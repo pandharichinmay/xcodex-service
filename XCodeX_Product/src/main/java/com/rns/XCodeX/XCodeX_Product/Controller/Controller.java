@@ -162,4 +162,12 @@ public class Controller {
 	public List<OrderMaster> getLimitedOrdersbyAssignTo(@PathVariable Long assignId, @PathVariable int limit) {
 		return orderService.getLimitedOrdersbyAssignTo(assignId, limit);
 	}
+
+	@RequestMapping("/loadProfile/{idUser}")
+	public UserMaster loadProfile(@PathVariable Long idUser) {
+		UserMaster request = new UserMaster();
+		request.setIdUser(idUser);
+		return userService.loadProfile(request);
+
+	}
 }
