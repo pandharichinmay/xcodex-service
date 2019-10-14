@@ -189,7 +189,13 @@ public class OrderServiceImpl implements OrderService {
 
 	public List<OrderMaster> getAllOrdersSearch() {
 		System.out.println("All Orders List for Search!..");
-		return orderMasterRepositary.findAllOrders();
+		//return orderMasterRepositary.findAllOrders();
+		List<OrderMaster> assignedOrders = orderMasterRepositary.findAllOrders();
+
+		for (OrderMaster orderMaster : assignedOrders) {
+			orderMaster.setTimeleft(timeLeftMethod(orderMaster.getDue_date(), new Date()));
+		}
+		return assignedOrders;
 	}
 
 	@Override
