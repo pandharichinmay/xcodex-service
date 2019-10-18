@@ -20,16 +20,17 @@ public interface OrderMasterRepositary extends CrudRepository<OrderMaster, Long>
 
 	Optional<OrderMaster> findByidOrder(Long idOrder);
 
-	@Query("FROM OrderMaster where status_id!=2 AND active_flag='A' AND (orderCreated_by.idUser =:assignId OR assignedTo.idUser=:assignId)")
+	@Query("FROM OrderMaster where status_id!=2 AND active_flag='A' AND (orderCreated_by.idUser =:assignId OR assignedTo.idUser=:assignId) order by coalesce(due_date,'2099-12-31'), created_at desc")
 	List<OrderMaster> findOrdersAssignedTo(@org.springframework.data.repository.query.Param("assignId") Long assignId);
 
-	@Query("FROM OrderMaster where status_id!=2 AND active_flag='A'")
+	@Query("FROM OrderMaster where status_id!=2 AND active_flag='A' order by coalesce(due_date,'2099-12-31'), created_at desc")
 	List<OrderMaster> findAllOrders();
 
 	@Query("FROM OrderMaster where status_id!=2 AND active_flag='A'")
 	List<OrderMaster> findAllOrders(PageRequest of);
 
-	@Query("FROM OrderMaster where status_id!=2 AND active_flag='A' AND (orderCreated_by.idUser =:assignId OR assignedTo.idUser=:assignId)")
+	// case when due_date is null then 1 else 0 end, orderCreated_at desc
+	@Query("FROM OrderMaster where status_id!=2 AND active_flag='A' AND (orderCreated_by.idUser =:assignId OR assignedTo.idUser=:assignId) order by coalesce(due_date,'2099-12-31'), created_at desc")
 	List<OrderMaster> findOrdersAssignedTo(@org.springframework.data.repository.query.Param("assignId") Long assignId,
 			Pageable pageable);
 	/*
