@@ -1,6 +1,7 @@
 package com.rns.XCodeX.XCodeX_Product.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +33,22 @@ public class OrderHistoryLog implements Serializable {
 	@Column(name = "comments")
 	private String comments;
 	@Column(name = "timestamp")
-	private String timestamp;
+	private Date timestamp;
+	
+	//New columns
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "old_user", referencedColumnName = "id", insertable = false, updatable = false)
+	private UserMaster oldUser;
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "new_user", referencedColumnName = "id", insertable = false, updatable = false)
+	private UserMaster newUser;
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "old_status", referencedColumnName = "id", insertable = false, updatable = false)
+	private OrderStatusMaster oldStatus;
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "new_status", referencedColumnName = "id", insertable = false, updatable = false)
+	private OrderStatusMaster newStatus;
+	private Integer timeLapsed;
 
 	public Long getIdHistory() {
 		return idHistory;
@@ -74,12 +90,52 @@ public class OrderHistoryLog implements Serializable {
 		this.comments = comments;
 	}
 
-	public String getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public UserMaster getOldUser() {
+		return oldUser;
+	}
+
+	public void setOldUser(UserMaster oldUser) {
+		this.oldUser = oldUser;
+	}
+
+	public UserMaster getNewUser() {
+		return newUser;
+	}
+
+	public void setNewUser(UserMaster newUser) {
+		this.newUser = newUser;
+	}
+
+	public OrderStatusMaster getOldStatus() {
+		return oldStatus;
+	}
+
+	public void setOldStatus(OrderStatusMaster oldStatus) {
+		this.oldStatus = oldStatus;
+	}
+
+	public OrderStatusMaster getNewStatus() {
+		return newStatus;
+	}
+
+	public void setNewStatus(OrderStatusMaster newStatus) {
+		this.newStatus = newStatus;
+	}
+
+	public Integer getTimeLapsed() {
+		return timeLapsed;
+	}
+
+	public void setTimeLapsed(Integer timeLapsed) {
+		this.timeLapsed = timeLapsed;
 	}
 
 }
