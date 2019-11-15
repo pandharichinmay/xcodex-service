@@ -105,12 +105,15 @@ public class OrderServiceImpl implements OrderService {
 		System.out.println("All Orders List!..");
 		return orderMasterRepositary.findAll();
 	}
+
 //main
 	public List<OrderMaster> getOrdersbyAssignTo(Long assignId) {
 		System.out.println("Orders by Assign To!.." + assignId);
 		List<OrderMaster> assignedOrders = orderMasterRepositary.findOrdersAssignedTo(assignId);
 		for (OrderMaster orderMaster : assignedOrders) {
 			orderMaster.setTimeleft(calculateTimeLeft(orderMaster.getDue_date(), new Date()));
+			orderMaster.setLastUpdatedAt(calculateTimeLeft(new Date(), orderMaster.getUpdatedDate()));
+			System.out.println("Order Master Date Assignt To:- " + orderMaster);
 		}
 		return assignedOrders;
 	}
@@ -125,7 +128,7 @@ public class OrderServiceImpl implements OrderService {
 	public Optional<OrderMaster> getOrderDetails(Long idOrder) {
 		System.out.println("Order Details By Order Id!.." + idOrder);
 		Optional<OrderMaster> order = orderMasterRepositary.findByidOrder(idOrder);
-		if(order.isPresent() && order.get() != null) {
+		if (order.isPresent() && order.get() != null) {
 			order.get().setTimeleft(calculateTimeLeft(order.get().getDue_date(), new Date()));
 		}
 		return order;
@@ -193,12 +196,15 @@ public class OrderServiceImpl implements OrderService {
 
 	public List<OrderMaster> getAllOrdersSearch() {
 		System.out.println("All Orders List for Search!..");
-		//return orderMasterRepositary.findAllOrders();
+		// return orderMasterRepositary.findAllOrders();
 		List<OrderMaster> assignedOrders = orderMasterRepositary.findAllOrders();
 
 		for (OrderMaster orderMaster : assignedOrders) {
 			orderMaster.setTimeleft(calculateTimeLeft(orderMaster.getDue_date(), new Date()));
+			orderMaster.setLastUpdatedAt(calculateTimeLeft(new Date(), orderMaster.getUpdatedDate()));
+			System.out.println("Order Master :- " + orderMaster);
 		}
+
 		return assignedOrders;
 	}
 

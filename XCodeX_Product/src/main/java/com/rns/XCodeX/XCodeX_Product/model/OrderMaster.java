@@ -80,7 +80,7 @@ public class OrderMaster implements Serializable {
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private CustomerMaster customer_id;
-
+	private String lastUpdatedAt;
 	private /*transient*/ String timeleft;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "order_id")
@@ -88,6 +88,14 @@ public class OrderMaster implements Serializable {
 
 	public Long getIdOrder() {
 		return idOrder;
+	}
+
+	public String getLastUpdatedAt() {
+		return lastUpdatedAt;
+	}
+
+	public void setLastUpdatedAt(String lastUpdatedAt) {
+		this.lastUpdatedAt = lastUpdatedAt;
 	}
 
 	public void setIdOrder(Long idOrder) {
