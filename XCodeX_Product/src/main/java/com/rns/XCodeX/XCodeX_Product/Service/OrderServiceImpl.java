@@ -111,8 +111,8 @@ public class OrderServiceImpl implements OrderService {
 		System.out.println("Orders by Assign To!.." + assignId);
 		List<OrderMaster> assignedOrders = orderMasterRepositary.findOrdersAssignedTo(assignId);
 		for (OrderMaster orderMaster : assignedOrders) {
-			orderMaster.setTimeleft(calculateTimeLeft(orderMaster.getDue_date(), new Date()));
-			orderMaster.setLastUpdatedAt(calculateTimeLeft(new Date(), orderMaster.getUpdatedDate()));
+			orderMaster.setTimeleft(calculateTimeLeft(orderMaster.getDue_date(), new Date(), "Due in "));
+			orderMaster.setLastUpdatedAt(calculateTimeLeft(new Date(), orderMaster.getUpdatedDate(), "Last Updated "));
 			System.out.println("Order Master Date Assignt To:- " + orderMaster);
 		}
 		return assignedOrders;
@@ -129,7 +129,7 @@ public class OrderServiceImpl implements OrderService {
 		System.out.println("Order Details By Order Id!.." + idOrder);
 		Optional<OrderMaster> order = orderMasterRepositary.findByidOrder(idOrder);
 		if (order.isPresent() && order.get() != null) {
-			order.get().setTimeleft(calculateTimeLeft(order.get().getDue_date(), new Date()));
+			order.get().setTimeleft(calculateTimeLeft(order.get().getDue_date(), new Date(), "Due in "));
 		}
 		return order;
 	}
@@ -140,7 +140,7 @@ public class OrderServiceImpl implements OrderService {
 		List<OrderMaster> assignedOrders = orderMasterRepositary.findOrdersAssignedTo(assignId);
 
 		for (OrderMaster orderMaster : assignedOrders) {
-			orderMaster.setTimeleft(calculateTimeLeft(orderMaster.getDue_date(), new Date()));
+			orderMaster.setTimeleft(calculateTimeLeft(orderMaster.getDue_date(), new Date(), "Due in "));
 		}
 		return assignedOrders;
 
@@ -200,8 +200,8 @@ public class OrderServiceImpl implements OrderService {
 		List<OrderMaster> assignedOrders = orderMasterRepositary.findAllOrders();
 
 		for (OrderMaster orderMaster : assignedOrders) {
-			orderMaster.setTimeleft(calculateTimeLeft(orderMaster.getDue_date(), new Date()));
-			orderMaster.setLastUpdatedAt(calculateTimeLeft(new Date(), orderMaster.getUpdatedDate()));
+			orderMaster.setTimeleft(calculateTimeLeft(orderMaster.getDue_date(), new Date(), "Due in "));
+			orderMaster.setLastUpdatedAt(calculateTimeLeft(new Date(), orderMaster.getUpdatedDate(), "Last Updated "));
 			System.out.println("Order Master :- " + orderMaster);
 		}
 
@@ -222,11 +222,11 @@ public class OrderServiceImpl implements OrderService {
 
 	}
 
-	public static String calculateTimeLeft(Date d1, Date d2) {
+	public static String calculateTimeLeft(Date d1, Date d2, String prefix) {
 		if (d1 == null || d2 == null) {
 			return null;
 		}
-		String difference = "Due in ";
+		String difference = prefix;
 		try {
 
 			long diff = d1.getTime() - d2.getTime();
@@ -262,12 +262,12 @@ public class OrderServiceImpl implements OrderService {
 		return difference;
 	}
 
-	public static void main(String[] args) throws ParseException {
-		String dateStart = "10/11/2019 09:29:58";
-		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		Date d1 = null;
-		d1 = format.parse(dateStart);
-		calculateTimeLeft(d1, new Date());
-
-	}
+	/*
+	 * public static void main(String[] args) throws ParseException { String
+	 * dateStart = "10/11/2019 09:29:58"; SimpleDateFormat format = new
+	 * SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); Date d1 = null; d1 =
+	 * format.parse(dateStart); calculateTimeLeft(d1, new Date());
+	 * 
+	 * }
+	 */
 }
